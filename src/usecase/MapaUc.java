@@ -23,6 +23,7 @@ public class MapaUc {
         lugaresNoMapa.add("Castelo");
         lugaresNoMapa.add("Pantano");
         lugaresNoMapa.add("Floresta");
+        lugaresNoMapa.add("Montanha");
     }
 
     public List<String> abrirMapa() {
