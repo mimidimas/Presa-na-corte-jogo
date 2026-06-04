@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public class ContratoMagico {
     private LocalDate prazo;
-    private Boolean estado;
+    private String estado;
 
     public LocalDate getPrazo() {
         return prazo;
@@ -14,11 +14,11 @@ public class ContratoMagico {
         this.prazo = prazo;
     }
 
-    public Boolean getEstado() {
+    public String getEstado() {
         return estado;
     }
 
-    public void setEstado(Boolean estado) {
+    public void setEstado(String estado) {
         this.estado = estado;
     }
 }

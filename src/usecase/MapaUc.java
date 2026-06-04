@@ -3,6 +3,7 @@ package usecase;
 import java.util.ArrayList;
 import java.util.List;
 
+import entity.GarotaHumana;
 import entity.Mapa;
 
 public class MapaUc {
@@ -13,11 +14,11 @@ public class MapaUc {
     private List<String> lugaresNoMapa = new ArrayList<>();
     private List<String> locaisVisitados = new ArrayList<>();
 
-    public MapaUc(ContratoUC contratoUC) {
+    public MapaUc(ContratoUC contratoUC, GarotaHumana garota) {
         this.contratoUC = contratoUC;
         this.missaoUc = new MissaoUc(garota);
         this.local = new Mapa();
-        this.setLocal("Castelo");
+        this.local.setLocal("Castelo");
 
         lugaresNoMapa.add("Castelo");
         lugaresNoMapa.add("Pantano");
@@ -53,7 +54,7 @@ public class MapaUc {
         } else if (destino.equalsIgnoreCase("Castelo")) {
             missaoUc.missaoAtribuida("Guarda");
         }
-         return mensagemRetorno; 
+        return mensagemRetorno;
     }
 
 }
