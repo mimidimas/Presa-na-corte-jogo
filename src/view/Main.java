@@ -1,12 +1,7 @@
 package view;
 
 import java.util.Scanner;
-
-import entity.Coroa;
 import entity.GarotaHumana;
-import entity.Gato;
-import entity.Troll;
-import entity.npc;
 import usecase.ContratoUC;
 import usecase.MapaUc;
 import usecase.MissaoUc;
@@ -47,8 +42,10 @@ public class Main {
 		MapaUc mapa = new MapaUc(contrato, garota);
 
 		while (contrato.validarPrazo()) {
+
 			char opcao = menu(nome, mapa, garota, missao);
 			if (opcao == 'X') {
+				garota.setPrisioneira(false);
 				break;
 			}
 
@@ -69,6 +66,7 @@ public class Main {
 
 	public static char menu(String nome, MapaUc mapa, GarotaHumana garota, MissaoUc missao) {
 		char opcao = ' ';
+		String resposta;
 
 		while (opcao != 'P' && opcao != 'C' && opcao != 'F' && opcao != 'M') {
 			System.out.println("Para onde " + nome + " irá agora?");
@@ -78,7 +76,14 @@ public class Main {
 				case 'P':
 					System.out.println(nome + mapa.viajaNoMapa("Pantano"));
 
-					System.out.println(missao.coletarCoroa("Pantano"));
+					System.out.println("Para continuar pelo caminho do Pantano" +
+							"\n" + "primeiro voce deve responder a charada");
+
+					System.out.println(missao.getCharada("Pantano")); // mostra o txt da charada
+
+					resposta = scan.nextLine();
+					System.out.println(missao.coletarCoroa(resposta));// tenta responder a charada
+
 					break;
 				case 'C':
 					System.out.println(nome + mapa.viajaNoMapa("Castelo"));
@@ -95,11 +100,23 @@ public class Main {
 					break;
 				case 'M':
 					System.out.println(nome + mapa.viajaNoMapa("Montanha"));
-					System.out.println(missao.coletarCoroa("Montanha"));
+					System.out.println("Para continuar pelo caminho do Montanha" +
+							"\n" + "primeiro voce deve responder a charada");
+
+					System.out.println(missao.getCharada("Montanha")); // mostra o txt da charada
+
+					resposta = scan.nextLine();
+					System.out.println(missao.coletarCoroa(resposta));// tenta responder a charada
 					break;
 				case 'F':
 					System.out.println(nome + mapa.viajaNoMapa("Floresta"));
-					System.out.println(missao.coletarCoroa("Floresta"));
+					System.out.println("Para continuar pelo caminho do Floresta" +
+							"\n" + "primeiro voce deve responder a charada");
+
+					System.out.println(missao.getCharada("Floresta")); // mostra o txt da charada
+
+					resposta = scan.nextLine();
+					System.out.println(missao.coletarCoroa(resposta));// tenta responder a charada
 					break;
 				default:
 					System.out.println(RED + "Local não encontrado" + RESET);

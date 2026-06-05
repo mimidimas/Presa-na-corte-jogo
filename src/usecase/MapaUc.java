@@ -49,11 +49,13 @@ public class MapaUc {
 
         // dependendo do lugar chama tal npc
         if (destino.equalsIgnoreCase("Pantano")) {
-            missaoUc.missaoAtribuida("Troll");
+            missaoUc.getCharada("Pantano");
         } else if (destino.equalsIgnoreCase("Floresta")) {
-            missaoUc.missaoAtribuida("Gato");
+            missaoUc.getCharada("Floresta");
         } else if (destino.equalsIgnoreCase("Castelo")) {
-            missaoUc.missaoAtribuida("Guarda");
+            missaoUc.getCharada("Castelo");
+        } else if (destino.equalsIgnoreCase("Montanha")) {
+            missaoUc.getCharada("Montanha");
         }
         return mensagemRetorno;
     }

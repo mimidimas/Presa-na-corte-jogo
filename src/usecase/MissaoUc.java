@@ -5,56 +5,56 @@ import entity.GarotaHumana;
 import entity.Gato;
 import entity.Guarda;
 import entity.Troll;
-import entity.npc;
+import entity.Npc;
 
 public class MissaoUc {
 
     private GarotaHumana garota;
     private Coroa coroa;
-    private boolean missaoAtiva;
+    // private boolean missaoAtiva;
+    private Npc npcAtual;
 
     public MissaoUc(GarotaHumana garota) {
 
         this.garota = garota;
     }
 
-    public String coletarCoroa(String local) {
-        boolean acertouCharada = false;
-        npc npc;
-        if ("Pantano".equalsIgnoreCase(local)) {//////////////////////////////////////////////
-            npc = new Troll();
-            acertouCharada = npc.implementarMissao(); // chama a charada aqui e retornta se acertou ou não
+    public String getCharada(String local) {
 
-        } else if ("Floresta".equalsIgnoreCase(local)) {///////////////////////////////////////
-            npc = new Gato();
-            acertouCharada = npc.implementarMissao(); // chama a charada aqui e retornta se acertou ou não
+        if ("Pantano".equalsIgnoreCase(local)) {
+            npcAtual = new Troll();
+            String missao = npcAtual.getMissao() + "\n\n\n" + npcAtual.getOpcoes();
+            return missao;
 
-        } else if ("Montanha".equalsIgnoreCase(local)) { //// um lugar novo???////////////////////
-            npc = new Guarda();
-            acertouCharada = npc.implementarMissao(); // chama a charada aqui e retornta se acertou ou não
+        } else if ("Floresta".equalsIgnoreCase(local)) {
+            npcAtual = new Gato();
+            String missao = npcAtual.getMissao() + "\n\n\n" + npcAtual.getOpcoes();
+            return missao;
+
+        } else if ("Montanha".equalsIgnoreCase(local)) {
+            npcAtual = new Guarda();
+            String missao = npcAtual.getMissao() + "\n\n\n" + npcAtual.getOpcoes();
+            return missao;
 
         }
+        return "este local não tem uma charada";
+    }
 
-        if (acertouCharada) {
-            missaoAtribuida(local);
+    public String coletarCoroa(String resposta) {
+        if (npcAtual == null) {
+            return "erro PRERICO NPC NULL";
+        }
+
+        String respostaCerta = npcAtual.getResposta();
+
+        if (respostaCerta.equalsIgnoreCase(resposta)) {
+            coroa = npcAtual.getCoroa();
+            garota.getInventario().setItem("Coroa do: " + coroa.getDonoNome());
+            garota.getInventario().setQuantidade(1);
             return missaoConcluida();
 
         } else {
             return missaoFalha();
-        }
-
-    }
-
-    public void missaoAtribuida(String local) {
-        missaoAtiva = true; // ativei a missao
-
-        // de acordo com o npc que passa a missao defina a coroa real
-        if (local.equalsIgnoreCase("Pantano")) {
-            coroa = new Coroa("Troll", true, false);
-        } else if (local.equalsIgnoreCase("Montanha")) {
-            coroa = new Coroa("Guarda", true, false);
-        } else if (local.equalsIgnoreCase("Floresta")) {
-            coroa = new Coroa("Gato", true, true);
         }
 
     }
@@ -68,17 +68,14 @@ public class MissaoUc {
     }
 
     public String missaoConcluida() {
-        missaoAtiva = false;
-        garota.getInventario().setItem("Coroa do : " + coroa.getDonoNome());
-        garota.getInventario().setQuantidade(1);
         return " Você decifrou a charada e conseguiu a do " + coroa.getDonoNome();
-
     }
 
     public String missaoFalha() {
-        missaoAtiva = false; // permite tentar outra charada ou outro lugar
+        // missaoAtiva = false; // permite tentar outra charada ou outro lugar
 
         return "Você errou a charada e sai de mãos vazias";
 
     }
+
 }

@@ -8,14 +8,14 @@ public class ContratoUC {
 
     private ContratoMagico contrato;
     private GarotaHumana garota;
-    private PrincipeFeerico principe;
+    // private PrincipeFeerico principe;
 
     private int diasUsados = 0;
     private final int prazoContrato = 3;
 
     public ContratoUC(GarotaHumana garota, PrincipeFeerico principe) {
         this.garota = garota;
-        this.principe = principe;
+        // this.principe = principe;
         this.contrato = new ContratoMagico();
         this.contrato.setEstado("Pendente");
 
@@ -23,7 +23,7 @@ public class ContratoUC {
 
     public void assinaturaContrato() {
         contrato = new ContratoMagico();// cria o contrato aqui
-        garota.setPrisioneira(false); // não é mais prisioneira
+        garota.setPrisioneira(true); // ainda é prisioneira, só deixara de ser se achar a coroa
     }
 
     public boolean validarPrazo() {

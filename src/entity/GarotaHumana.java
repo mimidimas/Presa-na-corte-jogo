@@ -31,7 +31,4 @@ public class GarotaHumana {
         return inventario;
     }
 
-    public void setInventario(Inventario inventario) {
-        this.inventario = inventario;
-    }
 }
