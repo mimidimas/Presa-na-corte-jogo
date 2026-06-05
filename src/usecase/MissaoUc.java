@@ -1,5 +1,7 @@
 package usecase;
 
+import resources.Colors;
+
 import entity.Coroa;
 import entity.GarotaHumana;
 import entity.Gato;
@@ -14,8 +16,9 @@ public class MissaoUc {
     // private boolean missaoAtiva;
     private Npc npcAtual;
 
-    public MissaoUc(GarotaHumana garota) {
+    public static final Colors color = new Colors();
 
+    public MissaoUc(GarotaHumana garota) {
         this.garota = garota;
     }
 
@@ -23,26 +26,26 @@ public class MissaoUc {
 
         if ("Pantano".equalsIgnoreCase(local)) {
             npcAtual = new Troll();
-            String missao = npcAtual.getMissao() + "\n\n\n" + npcAtual.getOpcoes();
+            String missao = color.GREEN + npcAtual.getMissao() + color.RESET + "\n" + npcAtual.getOpcoes();
             return missao;
 
         } else if ("Floresta".equalsIgnoreCase(local)) {
             npcAtual = new Gato();
-            String missao = npcAtual.getMissao() + "\n\n\n" + npcAtual.getOpcoes();
+            String missao =  color.PURPLE + npcAtual.getMissao() + color.RESET +"\n" + npcAtual.getOpcoes();
             return missao;
 
         } else if ("Montanha".equalsIgnoreCase(local)) {
             npcAtual = new Guarda();
-            String missao = npcAtual.getMissao() + "\n\n\n" + npcAtual.getOpcoes();
+            String missao = color.CYAN + npcAtual.getMissao() + color.RESET + "\n" + npcAtual.getOpcoes();
             return missao;
-
         }
-        return "este local não tem uma charada";
+
+        return "Esse local nao tem uma charada";
     }
 
     public String coletarCoroa(String resposta) {
         if (npcAtual == null) {
-            return "erro PRERICO NPC NULL";
+            return "NPC NULL";
         }
 
         String respostaCerta = npcAtual.getResposta();
@@ -68,14 +71,15 @@ public class MissaoUc {
     }
 
     public String missaoConcluida() {
-        return " Você decifrou a charada e conseguiu a do " + coroa.getDonoNome();
+        return "\n" + color.YELLOW + garota.getNome() + color.RESET
+                + " decifrou a charada e conseguiu a " + color.YELLOW + "coroa do " 
+                + coroa.getDonoNome() + color.RESET + "!";
     }
 
     public String missaoFalha() {
         // missaoAtiva = false; // permite tentar outra charada ou outro lugar
-
-        return "Você errou a charada e sai de mãos vazias";
-
+        return "\n" + color.YELLOW + garota.getNome() + color.RESET
+                + " errou a charada e foi convidada a se retirar do local.";
     }
 
 }

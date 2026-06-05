@@ -5,6 +5,7 @@ import java.util.List;
 
 import entity.GarotaHumana;
 import entity.Mapa;
+import resources.Colors;
 
 public class MapaUc {
     private Mapa local;
@@ -38,7 +39,8 @@ public class MapaUc {
 
         // fluxo 1a ( avisando que que o local foi visitado já)
         if (locaisVisitados.contains(destino)) {
-            mensagemRetorno += "\n[Aviso] Você já explorou este lugar antes.";
+            Colors color = new Colors();
+            mensagemRetorno += "\n" + color.RED + "[Aviso] Você já explorou este lugar antes.";
         } else {
             locaisVisitados.add(destino);
         }

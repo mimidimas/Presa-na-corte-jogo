@@ -5,9 +5,12 @@ import java.util.List;
 public class Guarda implements Npc {
     private String nome;
 
-    private String missao = " Troll texto da charada aqui ";
+    private String missao = "Existem quatro classes sociais na Corte das Fadas, e apesar das "
+                            + "\nfalsas simpatias do nosso principe feerico, a sua riqueza nao deixa a esconder "
+                            + "a classe a qual sempre pertenceu."
+                            + "\nQual a classe de mais alto nivel da Corte das Fadas?";
 
-    private List<String> opcoes = List.of("opc1", "opc2", "opc3");
+    private List<String> opcoes = List.of("Presenters", "Drivers", "Entidades");
 
     @Override
     public String getName() {
@@ -22,7 +25,7 @@ public class Guarda implements Npc {
     @Override
     public String getResposta() {
 
-        return opcoes.get(0);
+        return opcoes.get(2);
     }
 
     @Override
