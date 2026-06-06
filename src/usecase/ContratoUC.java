@@ -38,7 +38,7 @@ public class ContratoUC {
                 + color.GREEN_BOLD + "   +====================================+" + "\n" +
                 color.GREEN_BOLD + "   |      A COROA FOI ENCONTRADA        |" + "\n" +
                 color.GREEN_BOLD + "   |      O CONTRATO FOI CUMPRIDO       |" + "\n" +
-                color.GREEN_BOLD + "   +====================================+\n";
+                color.GREEN_BOLD + "   +====================================+\n" + color.RESET;
 
     }
 
@@ -48,7 +48,7 @@ public class ContratoUC {
                 + color.RED_BOLD + "   +====================================+" + "\n" +
                 color.RED_BOLD + "   |      A COROA NAO FOI ENCONTRADA    |" + "\n" +
                 color.RED_BOLD + "   |      O CONTRATO FOI QUEBRADO       |" + "\n" +
-                color.RED_BOLD + "   +====================================+\n";
+                color.RED_BOLD + "   +====================================+\n" + color.RESET;
     }
 
     public void passarDia() {

@@ -4,19 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import entity.Mapa;
+import entity.GarotaHumana;
 import resources.Colors;
 
 public class MapaUc {
     private Mapa local;
     private ContratoUC contratoUC;
     private MissaoUc missaoUc;
+    private GarotaHumana garota;
 
     private List<String> lugaresNoMapa = new ArrayList<>();
     private List<String> locaisVisitados = new ArrayList<>();
 
-    public MapaUc(ContratoUC contratoUC, MissaoUc missao) {
+    public MapaUc(ContratoUC contratoUC, MissaoUc missao, GarotaHumana garota) {
         this.contratoUC = contratoUC;
         this.missaoUc = missao;
+        this.garota = garota;
         this.local = new Mapa();
         this.local.setLocal("Castelo");
 
@@ -27,7 +30,7 @@ public class MapaUc {
     }
 
     public String abrirMapa() {
-        if (!local.getLocal().equalsIgnoreCase("Castelo")) {
+        if (!local.getLocal().equalsIgnoreCase("Castelo") && garota.getInventario().getItem() != null) {
             return "(C) Castelo";
         }
         // Se ela estiver no Castelo, ela pode ir para os outros lugares
@@ -44,7 +47,7 @@ public class MapaUc {
         // fluxo 1a ( avisando que que o local foi visitado já)
         if (locaisVisitados.contains(destino)) {
             Colors color = new Colors();
-            mensagemRetorno += "\n" + color.RED + "[Aviso] Você já explorou este lugar antes.";
+            mensagemRetorno += "\n" + color.RED + "[Aviso] Você já explorou este lugar antes." + color.RESET;
         } else {
             locaisVisitados.add(destino);
         }
