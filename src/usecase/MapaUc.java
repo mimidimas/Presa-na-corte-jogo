@@ -30,7 +30,7 @@ public class MapaUc {
     }
 
     public String abrirMapa() {
-        if (!local.getLocal().equalsIgnoreCase("Castelo") && garota.getInventario().getItem() != null) {
+        if (!local.getLocal().equalsIgnoreCase("Castelo")) {
             return "(C) Castelo";
         }
         // Se ela estiver no Castelo, ela pode ir para os outros lugares

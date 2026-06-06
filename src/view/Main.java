@@ -112,7 +112,15 @@ public class Main {
 					espera();
 					digitar(nome + " entra no castelo, e ao se apresentar ao principe, ele diz: ");
 					espera();
-					if (principe.verificarCoroa(missao.getCoroa())) {
+					if (garota.getInventario().getQuantidade() < 1) {
+						digitar(color.BLUE
+								+ "Principe: Ousas pisar aqui de maos vazias? Volte para sua cela entao,"
+								+ "\n se nao pretende ser util e buscar minha coroa."
+								+ "\nPrincipe: Voce passara o restante desse dia em sua cela apos esse desrespeito contra minha autoridade!"
+								+ color.RESET);
+						espera();
+						digitar(nome + " passou o restante do dia no Castelo.");
+					} else if (principe.verificarCoroa(missao.getCoroa())) {
 						digitar(color.BLUE + "\nPrincipe: Finalmente! Agora va, suma desse castelo, suma desse reino. "
 								+ "\nAproveite o resquicio de liberdade que encontrara fora daqui." + color.RESET);
 						garota.setPrisioneira(false);
