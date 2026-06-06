@@ -3,19 +3,13 @@ package entity;
 import java.util.List;
 
 public class Guarda implements Npc {
-    private String nome;
 
     private String missao = "Existem quatro classes sociais na Corte das Fadas, e apesar das "
-                            + "\nfalsas simpatias do nosso principe feerico, a sua riqueza nao deixa a esconder "
-                            + "a classe a qual sempre pertenceu."
-                            + "\nQual a classe de mais alto nivel da Corte das Fadas?";
+            + "\nfalsas simpatias do nosso principe feerico, a sua riqueza nao deixa a esconder "
+            + "\na classe a qual sempre pertenceu."
+            + "\nQual a classe de mais alto nivel da Corte das Fadas?";
 
     private List<String> opcoes = List.of("Presenters", "Drivers", "Entidades");
-
-    @Override
-    public String getName() {
-        return this.nome;
-    }
 
     @Override
     public String getMissao() {

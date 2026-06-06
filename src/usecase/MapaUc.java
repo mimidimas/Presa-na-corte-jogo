@@ -3,7 +3,6 @@ package usecase;
 import java.util.ArrayList;
 import java.util.List;
 
-import entity.GarotaHumana;
 import entity.Mapa;
 import resources.Colors;
 
@@ -15,9 +14,9 @@ public class MapaUc {
     private List<String> lugaresNoMapa = new ArrayList<>();
     private List<String> locaisVisitados = new ArrayList<>();
 
-    public MapaUc(ContratoUC contratoUC, GarotaHumana garota) {
+    public MapaUc(ContratoUC contratoUC, MissaoUc missao) {
         this.contratoUC = contratoUC;
-        this.missaoUc = new MissaoUc(garota);
+        this.missaoUc = missao;
         this.local = new Mapa();
         this.local.setLocal("Castelo");
 
@@ -28,13 +27,13 @@ public class MapaUc {
     }
 
     public String abrirMapa() {
-    	if (!local.getLocal().equalsIgnoreCase("Castelo")) {
+        if (!local.getLocal().equalsIgnoreCase("Castelo")) {
             return "(C) Castelo";
         }
         // Se ela estiver no Castelo, ela pode ir para os outros lugares
         List<String> lugaresPossiveis = new ArrayList<>(lugaresNoMapa);
-        lugaresPossiveis.removeIf(lugar -> lugar.contains("Castelo")); 
-        
+        lugaresPossiveis.removeIf(lugar -> lugar.contains("Castelo"));
+
         return String.join(" | ", lugaresPossiveis);
     }
 

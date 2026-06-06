@@ -5,6 +5,7 @@ import static java.lang.Thread.sleep;
 
 import resources.Colors;
 import entity.GarotaHumana;
+import entity.PrincipeFeerico;
 import usecase.ContratoUC;
 import usecase.MapaUc;
 import usecase.MissaoUc;
@@ -12,33 +13,36 @@ import usecase.MissaoUc;
 public class Main {
 	public static final Scanner scan = new Scanner(System.in);
 	public static final Colors color = new Colors();
+	public static final PrincipeFeerico principe = new PrincipeFeerico();
 
 	public static void main(String[] args) {
 		String nome = "";
 		digitar(color.GREEN_BOLD + "============ PRESA NA CORTE ============" + color.RESET);
 		espera();
 		while (nome.isEmpty()) {
-			digitar("Insira o nome da garota humana:");
+			digitar("Insira o nome da garota humana: ");
 			nome = scan.nextLine();
 		}
 		GarotaHumana garota = new GarotaHumana(nome);
 		nome = color.YELLOW + garota.getNome() + color.RESET;
 
 		espera();
-		digitar("\n" + nome + " e uma prisioneira da corte das fadas, ate que um dia ela recebe uma proposta: ");
+		digitar("\n" + nome + " e uma prisioneira da corte das fadas," +
+				"\nate que um dia ela recebe uma proposta: ");
 
 		digitar(color.BLUE_BOLD + "ATENCAO! O nosso principe perdeu a coroa,"
-				+ " caso a encontre em tres dias, seus crimes serao perdoados. Toda vez que o castelo é visitado, um dia se passará!"
+				+ " caso a encontre em tres dias, seus crimes serao perdoados."
+				+ "\nATENCAO! Toda vez que o castelo é visitado, um dia se passara!"
 				+ color.RESET);
 		espera();
 		digitar("Sem pensar duas vezes, " + nome + " aceita a proposta e sai em busca da coroa.\n");
 
-		ContratoUC contrato = new ContratoUC(garota, null);
+		ContratoUC contrato = new ContratoUC(garota, principe);
 		contrato.assinaturaContrato();
 
 		MissaoUc missao = new MissaoUc(garota);
 
-		MapaUc mapa = new MapaUc(contrato, garota);
+		MapaUc mapa = new MapaUc(contrato, missao);
 
 		while (contrato.validarPrazo()) {
 			char opcao = menu(nome, mapa, garota, missao);
@@ -50,15 +54,13 @@ public class Main {
 
 		if (garota.getPrisioneira()) {
 			espera();
-			digitar("\n" + color.RED_BOLD + "========================================\n");
+
 			digitar(contrato.contratoExpirado());
-			digitar("\n========================================" + color.RESET);
 		} else {
 			espera();
-			digitar("\n" + color.GREEN_BOLD + "========================================\n");
 			digitar(contrato.contratoCumprido());
-			digitar("\n========================================" + color.RESET);
 		}
+
 	}
 
 	public static char menu(String nome, MapaUc mapa, GarotaHumana garota, MissaoUc missao) {
@@ -76,7 +78,7 @@ public class Main {
 				digitar(color.RED_BOLD
 						+ "\n[AVISO] Você precisa obrigatoriamente retornar ao Castelo com seus resultados antes de viajar de novo!\n"
 						+ color.RESET);
-				opcao = ' '; // Reseta a opção para forçar a pergunta novamente
+				opcao = ' '; // define a opcao forçar o loop
 				continue; // Reinicia o laço while
 			}
 
@@ -86,14 +88,15 @@ public class Main {
 
 					espera();
 					digitar("\nAo se aproximar do Pantano coberto de musgo, " + nome
-							+ " se depara com um " + color.GREEN + " Troll "
-							+ color.RESET + " emergindo da agua esverdeada. ");
+							+ "\n se depara com um " + color.GREEN + " Troll "
+							+ "\n" + color.RESET + " emergindo da agua esverdeada. ");
 					espera();
 					digitar("Ao notar a garota, o Troll diz: ");
 					espera();
 					digitar(color.GREEN + "\nTroll: EIII, o que procura aqui?!\n");
 					digitar(nome + color.YELLOW
-							+ ": Olá Senhor Troll, sou uma prisioneira do reino, Serei libertada apenas se encontrar a coroa perdida do Principe, preciso da sua ajuda!"
+							+ ": Olá Senhor Troll, sou uma prisioneira do reino, Serei libertada" +
+							" \napenas se encontrar a coroa perdida do Principe, preciso da sua ajuda!"
 							+ color.RESET);
 					digitar(color.GREEN + "\nTroll: Uma coroa? Eu vi uma coroa!");
 					digitar("\nTroll: Responda a essa charada e eu a entregarei para voce!\n" + color.RESET);
@@ -113,20 +116,22 @@ public class Main {
 					espera();
 					if (garota.getInventario().getQuantidade() < 1) {
 						digitar(color.BLUE
-								+ "Principe: Ousas pisar aqui de maos vazias? Volte para sua cela entao, se nao pretende ser util e buscar minha coroa."
+								+ "Principe: Ousas pisar aqui de maos vazias? Volte para sua cela entao,"
+								+ "\n se nao pretende ser util e buscar minha coroa."
 								+ "\nPrincipe: Voce passara o restante desse dia em sua cela apos esse desrespeito contra minha autoridade!"
 								+ color.RESET);
 						espera();
 						digitar(nome + " passou o restante do dia no Castelo.");
-					} else if (missao.validarCoroa()) {
+					} else if (principe.verificarCoroa(missao.getCoroa())) {
 						digitar(color.BLUE + "\nPrincipe: Finalmente! Agora va, suma desse castelo, suma desse reino. "
-								+ "Aproveite o resquicio de liberdade que encontrara fora daqui." + color.RESET);
+								+ "\nAproveite o resquicio de liberdade que encontrara fora daqui." + color.RESET);
 						garota.setPrisioneira(false);
 						espera();
 						return 'X'; // quebra o laço caso a garota tenha a coroa verdadeira
 					} else {
 						digitar(color.BLUE + "\nPrincipe: O que e essa 'coroa'? Acha que sou ingenuo? "
 								+ "\nEncontrou isso no lago do Pantano? Nos resquicios do antigo templo na Montanha? "
+								+ color.RED
 								+ "\nVoce passara o restante desse dia em sua cela apos esse desrespeito contra minha autoridade!"
 								+ color.RESET);
 						espera();
@@ -140,17 +145,20 @@ public class Main {
 
 					espera();
 					digitar("\nAo se aproximar da subida da Montanha, " + nome
-							+ " foi parada na entrada, de onde conseguia observar um templo antigo e parcialmente destruido.\n");
+							+ " foi parada na entrada, de onde conseguia observar um templo antigo"
+							+ "\n e parcialmente destruido.\n");
 
 					digitar(nome + color.YELLOW
-							+ ": Olá Senhor Guarda, sou uma prisioneira do reino, serei libertada apenas se encontrar a coroa perdida do principe, me ajude a encontrar!"
+							+ ": Olá Senhor Guarda, sou uma prisioneira do reino, serei libertada"
+							+ "\napenas se encontrar a coroa perdida do principe, me ajude a encontrar!"
 							+ color.RESET);
 					espera();
 					digitar("O " + color.CYAN + " Guarda " + color.RESET
 							+ " que a parou, ao saber do seu objetivo, ofereceu: ");
 					espera();
 					digitar(color.CYAN
-							+ "\nGuarda: Se respondes a minha pergunta corretamente, eres digna de retornar a coroa ao tirano."
+							+ "\nGuarda: Se respondes a minha pergunta corretamente,"
+							+ " eres digna de retornar a coroa ao tirano."
 							+ color.RESET);
 					espera();
 
@@ -171,15 +179,17 @@ public class Main {
 					digitar("Ao notar a humana, o gato diz:");
 					espera();
 					digitar(color.PURPLE + "Gato: Por que perturbas a minha floresta? Esse lugar "
-							+ "nao e para gente da sua rale, que nao compreende a verdadeira cultura.");
+							+ "\nnao e para gente da sua rale, que nao compreende a verdadeira cultura.");
 					espera();
 					digitar(nome + color.YELLOW
-							+ ": Olá Senhor Gato, sou uma prisioneira do reino, serei libertada apenas se encontrar a coroa perdida do principe, me ajude a encontrar! Me desculpe por lhe incomodar!"
+							+ ": Olá Senhor Gato, sou uma prisioneira do reino, serei libertada"
+							+ "\napenas se encontrar a coroa perdida do principe, me ajude a encontrar! Me desculpe por lhe incomodar!"
 							+ color.RESET);
 					espera();
 
 					digitar(color.PURPLE
-							+ "Gato: A coroa? A sim, esta comigo. Voce quer ela? Responda a uma pergunta e talvez a entregarei."
+							+ "Gato: A coroa? A sim, esta comigo. Voce quer ela?"
+							+ "\nResponda a uma pergunta e talvez a entregarei."
 							+ color.RESET);
 					espera();
 					digitar(missao.getCharada("Floresta")); // mostra o txt da charada
@@ -205,7 +215,7 @@ public class Main {
 	}
 
 	public static void digitar(String texto) {
-		int delay = 40;
+		int delay = 0;
 		for (char caractere : texto.toCharArray()) {
 			System.out.print(caractere);
 

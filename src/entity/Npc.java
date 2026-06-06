@@ -8,8 +8,6 @@ public interface Npc {
 
 	public String getResposta();
 
-	public String getName();
-
 	public Coroa getCoroa();
 
 	public List<String> getOpcoes();

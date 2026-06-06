@@ -1,16 +1,14 @@
 package entity;
 
-import java.time.LocalDate;
-
 public class ContratoMagico {
-    private LocalDate prazo;
+    private int prazo;
     private String estado;
 
-    public LocalDate getPrazo() {
+    public int getPrazo() {
         return prazo;
     }
 
-    public void setPrazo(LocalDate prazo) {
+    public void setPrazo(int prazo) {
         this.prazo = prazo;
     }
 
