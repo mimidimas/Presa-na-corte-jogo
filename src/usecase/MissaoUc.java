@@ -2,6 +2,8 @@ package usecase;
 
 import resources.Colors;
 
+import java.util.List;
+
 import entity.Coroa;
 import entity.GarotaHumana;
 import entity.Gato;
@@ -21,36 +23,49 @@ public class MissaoUc {
     public MissaoUc(GarotaHumana garota) {
         this.garota = garota;
     }
+    private String formatarOpcoes(List<String> opcoes) {
+        StringBuilder sb = new StringBuilder();
+        char letra = 'A';
+        for (String opcao : opcoes) {
+            sb.append(letra).append(") ").append(opcao).append("\n");
+            letra++;
+        }
+        return sb.toString().trim(); // Remove a quebra de linha sobrando no final
+    }
+    
 
     public String getCharada(String local) {
 
-        if ("Pantano".equalsIgnoreCase(local)) {
+    	if ("Pantano".equalsIgnoreCase(local)) {
             npcAtual = new Troll();
-            String missao = color.GREEN + npcAtual.getMissao() + color.RESET + "\n" + npcAtual.getOpcoes();
-            return missao;
+            return color.GREEN + npcAtual.getMissao() + color.RESET + "\n" + formatarOpcoes(npcAtual.getOpcoes());
 
         } else if ("Floresta".equalsIgnoreCase(local)) {
             npcAtual = new Gato();
-            String missao =  color.PURPLE + npcAtual.getMissao() + color.RESET +"\n" + npcAtual.getOpcoes();
-            return missao;
+            return color.PURPLE + npcAtual.getMissao() + color.RESET +"\n" + formatarOpcoes(npcAtual.getOpcoes());
 
         } else if ("Montanha".equalsIgnoreCase(local)) {
             npcAtual = new Guarda();
-            String missao = color.CYAN + npcAtual.getMissao() + color.RESET + "\n" + npcAtual.getOpcoes();
-            return missao;
+            return color.CYAN + npcAtual.getMissao() + color.RESET + "\n" + formatarOpcoes(npcAtual.getOpcoes());
         }
 
         return "Esse local nao tem uma charada";
     }
 
     public String coletarCoroa(String resposta) {
-        if (npcAtual == null) {
+    	if (npcAtual == null) {
             return "NPC NULL";
         }
 
         String respostaCerta = npcAtual.getResposta();
+        String tentativa = resposta.trim(); // Limpa espaços acidentais antes e depois
 
-        if (respostaCerta.equalsIgnoreCase(resposta)) {
+        List<String> opcoes = npcAtual.getOpcoes();
+        if (tentativa.equalsIgnoreCase("A") && opcoes.size() > 0) tentativa = opcoes.get(0);
+        else if (tentativa.equalsIgnoreCase("B") && opcoes.size() > 1) tentativa = opcoes.get(1);
+        else if (tentativa.equalsIgnoreCase("C") && opcoes.size() > 2) tentativa = opcoes.get(2);
+
+        if (respostaCerta.equalsIgnoreCase(tentativa)) {
             coroa = npcAtual.getCoroa();
             garota.getInventario().setItem("Coroa do: " + coroa.getDonoNome());
             garota.getInventario().setQuantidade(1);
@@ -61,6 +76,8 @@ public class MissaoUc {
         }
 
     }
+
+ 
 
     public boolean validarCoroa() {
         if (coroa == null) {

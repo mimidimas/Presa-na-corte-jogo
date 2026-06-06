@@ -21,16 +21,21 @@ public class MapaUc {
         this.local = new Mapa();
         this.local.setLocal("Castelo");
 
-        lugaresNoMapa.add("Castelo");
-        lugaresNoMapa.add("Pantano");
-        lugaresNoMapa.add("Floresta");
-        lugaresNoMapa.add("Montanha");
+        lugaresNoMapa.add("(C) Castelo");
+        lugaresNoMapa.add("(P) Pantano");
+        lugaresNoMapa.add("(F) Floresta");
+        lugaresNoMapa.add("(M) Montanha");
     }
 
-    public List<String> abrirMapa() {
+    public String abrirMapa() {
+    	if (!local.getLocal().equalsIgnoreCase("Castelo")) {
+            return "(C) Castelo";
+        }
+        // Se ela estiver no Castelo, ela pode ir para os outros lugares
         List<String> lugaresPossiveis = new ArrayList<>(lugaresNoMapa);
-        lugaresPossiveis.remove(local.getLocal()); // tira a posibilidade de ir pro lugar em que a personagem já esta
-        return lugaresPossiveis; // retorna alista de opcoes de ligares que deve ser exibina no view
+        lugaresPossiveis.removeIf(lugar -> lugar.contains("Castelo")); 
+        
+        return String.join(" | ", lugaresPossiveis);
     }
 
     public String viajaNoMapa(String destino) {
