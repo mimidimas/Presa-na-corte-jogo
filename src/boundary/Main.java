@@ -1,12 +1,12 @@
-package view;
+package boundary;
 
 import entity.GarotaHumana;
 import entity.PrincipeFeerico;
 import java.util.Scanner;
 import resources.Colors;
-import usecase.ContratoUC;
-import usecase.MapaUc;
-import usecase.MissaoUc;
+import control.ContratoUC;
+import control.MapaUc;
+import control.MissaoUc;
 
 public class Main {
 	public static final Scanner scan = new Scanner(System.in);
@@ -86,8 +86,8 @@ public class Main {
 
 					espera();
 					digitar("\nAo se aproximar do Pantano coberto de musgo, " + nome
-							+ "\n se depara com um " + color.GREEN + " Troll "
-							+ "\n" + color.RESET + " emergindo da agua esverdeada. ");
+							+ "\nse depara com um " + color.GREEN + " Troll "
+							+ "\n" + color.RESET + "emergindo da agua esverdeada. ");
 					espera();
 					digitar("Ao notar a garota, o Troll diz: ");
 					espera();
